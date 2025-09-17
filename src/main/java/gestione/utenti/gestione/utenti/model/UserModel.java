@@ -3,6 +3,7 @@ package gestione.utenti.gestione.utenti.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity //serve per dire che questa è una tabella e non una normale classe
 public class UserModel {
@@ -10,6 +11,7 @@ public class UserModel {
     @Id //senza Id Hibernate non sa a chi assegnare la chiave primaria
     @GeneratedValue //genera automaticamente l'id
     private Long id;
+    @NotBlank(message = "nome obbligatorio")
     private String name;
     private String email;
 

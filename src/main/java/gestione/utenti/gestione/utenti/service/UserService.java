@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import gestione.utenti.gestione.utenti.exception.NameAlreadyExist;
 import gestione.utenti.gestione.utenti.model.UserModel;
 import gestione.utenti.gestione.utenti.repository.UserRepository;
 
@@ -28,6 +29,9 @@ public class UserService {
     }
 
     public UserModel createUser(UserModel user) {
+        if(userRepository.findByName(user.getName()).isPresent()) {
+            throw new NameAlreadyExist("il nome " + user.getName() + " esiste già");
+        }
         return userRepository.save(user);
     }
 

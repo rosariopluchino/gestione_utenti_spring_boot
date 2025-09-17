@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import gestione.utenti.gestione.utenti.model.UserModel;
 
 import gestione.utenti.gestione.utenti.service.UserService;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +29,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public List<UserModel> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping("/create")
-    public UserModel createUser(@RequestBody UserModel user) {
+    public UserModel createUser(@Valid @RequestBody UserModel user) {
         return userService.createUser(user);
     }
 
