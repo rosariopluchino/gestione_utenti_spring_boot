@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+    db:
+      image: mysql:8.1
+      container_name: utenti_db
+      environment:
+        MYSQL_DATABASE: utenti_db
+        MYSQL_ROOT_PASSWORD: root
+      ports:
+        - 3306:3306
+      volumes:
+        - mysql-data:/var/lib/mysql
+
+    gestione.utenti:
+      build: .
+      container_name: gestione.utenti
+      depends_on:
+        - db
+      ports: 
+        - 8080:8080
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/utenti_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: root
+      
+
+volumes:
+  mysql-data:
