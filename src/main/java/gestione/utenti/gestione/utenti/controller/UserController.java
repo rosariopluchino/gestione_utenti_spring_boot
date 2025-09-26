@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @DeleteMapping("deleteUser")
-    public void deleteUser(UserModel userModel) {
-        userService.deleteUser(userModel);
+    public void deleteUserById(Long id) {
+        userService.deleteUser(id);
     }
 }

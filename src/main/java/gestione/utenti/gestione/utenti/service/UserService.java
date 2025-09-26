@@ -30,13 +30,16 @@ public class UserService {
 
     public UserModel createUser(UserModel user) {
         if(userRepository.findByName(user.getName()).isPresent()) {
-            throw new NameAlreadyExist("il nome " + user.getName() + " esiste già");
+            throw new NameAlreadyExist("Il nome " + user.getName() + " esiste già");
         }
         return userRepository.save(user);
     }
 
-    public void deleteUser(UserModel user) {
-        userRepository.delete(user);
+    public void deleteUser(Long id) {
+        if(!userRepository.existsById(1L)) {
+            throw new IllegalArgumentException("Utente con id: " + id + " non trovato");
+        }
+        userRepository.deleteById(id);
     }
 
     public void deleteAllUsers() {
