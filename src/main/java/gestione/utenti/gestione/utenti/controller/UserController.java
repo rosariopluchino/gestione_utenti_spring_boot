@@ -39,18 +39,18 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @GetMapping("/findById")
+    @GetMapping("/findById/{userId}")
     public Optional<UserModel> findUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
     }
 
-    @DeleteMapping("deleteAllUsers")
+    @DeleteMapping("/deleteAllUsers")
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
 
-    @DeleteMapping("deleteUser")
-    public void deleteUserById(Long id) {
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteUserById(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 }
