@@ -36,7 +36,7 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        if(!userRepository.existsById(1L)) {
+        if(!userRepository.existsById(id)) {
             throw new IllegalArgumentException("Utente con id: " + id + " non trovato");
         }
         userRepository.deleteById(id);
