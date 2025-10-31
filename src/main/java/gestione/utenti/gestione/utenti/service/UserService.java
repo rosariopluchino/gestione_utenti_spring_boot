@@ -45,4 +45,13 @@ public class UserService {
     public void deleteAllUsers() {
         userRepository.deleteAll();
     }
+
+    public UserModel updateUserById(Long id, UserModel user) {
+        UserModel existing = userRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("utente con id: " + id + " non trovato"));
+
+            existing.setName(user.getName());
+            existing.setEmail(user.getEmail());
+            return userRepository.save(existing);
+    }
 }
