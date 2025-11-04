@@ -139,4 +139,41 @@ public class UserServiceTest {
         assertEquals("Utente con id: 1 non trovato", exception.getMessage());
         verify(userRepository, never()).deleteById(user1);
     }
+
+    @Test
+    public void updateUserByIdSuccess() {
+        //nuovi valori da aggiornare
+        UserModel user = new UserModel("aldo", "aldo@outlook.com");
+        
+        //utente gia esistente nel db
+        UserModel existigUser = new UserModel("rosario", "rosario@outlook.com");
+        existigUser.setId(1L);
+        
+        //mock comportamenti repository
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existigUser));
+        when(userRepository.save(existigUser)).thenReturn(existigUser);
+
+        //chiamata al metodo che devo testare
+        UserModel updateUserById = userService.updateUserById(1L, user);
+        
+        //verifico
+        assertEquals("aldo", updateUserById.getName());
+        assertEquals("aldo@outlook.com", updateUserById.getEmail());
+        verify(userRepository).save(existigUser);
+    }
+
+    @Test
+    public void updateUserByIdFailed() {
+        UserModel user = new UserModel("rosario", "rosario@outlook.com");
+
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.updateUserById(1L, user);
+        });
+
+        assertEquals("utente con id: 1 non trovato", exception.getMessage());
+        verify(userRepository).findById(1L);
+        verify(userRepository, never()).save(any(UserModel.class));
+    }
 }
